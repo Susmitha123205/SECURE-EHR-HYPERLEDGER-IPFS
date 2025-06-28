@@ -1,0 +1,13 @@
+{
+  "name": "mycc",
+  "version": "0.0.3",
+  "description": "Node.js chaincode for medical records",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+    "build": "echo Building... && exit 0"
+  },
+  "dependencies": {
+    "fabric-shim": "^2.4.0"
+  }
+}

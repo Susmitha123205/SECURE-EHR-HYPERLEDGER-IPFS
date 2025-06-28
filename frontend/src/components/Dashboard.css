@@ -1,0 +1,39 @@
+.dashboard {
+  text-align: center;
+  padding: 30px;
+  min-height: 100vh;
+  background: linear-gradient(to right, #c1dfc4, #deecdd);
+}
+
+.dashboard h1 {
+  font-size: 2rem;
+  color: #222;
+}
+
+.dashboard h2 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.dashboard form {
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.dashboard input,
+.dashboard button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.dashboard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard li {
+  margin: 8px 0;
+}

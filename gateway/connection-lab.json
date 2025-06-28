@@ -1,0 +1,25 @@
+{
+  "name": "lab-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Lab"
+  },
+  "organizations": {
+    "Lab": {
+      "mspid": "LabMSP",
+      "certificateAuthorities": ["ca.lab.healthcare.com"]
+    }
+  },
+  "certificateAuthorities": {
+    "ca.lab.healthcare.com": {
+      "url": "http://localhost:7100",
+      "caName": "lab",
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/backend/app/organizations/fabric-ca/lab/tls.cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "doctor-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Doctor"
+  },
+  "organizations": {
+    "Doctor": {
+      "mspid": "DoctorMSP",
+      "certificateAuthorities": ["ca.doctor.healthcare.com"]
+    }
+  },
+  "certificateAuthorities": {
+    "ca.doctor.healthcare.com": {
+      "url": "http://localhost:7040",
+      "caName": "doctor",
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/backend/app/organizations/fabric-ca/doctor/tls.cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

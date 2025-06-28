@@ -1,0 +1,25 @@
+{
+  "name": "insurance-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Insurance"
+  },
+  "organizations": {
+    "Insurance": {
+      "mspid": "InsuranceMSP",
+      "certificateAuthorities": ["ca.insurance.healthcare.com"]
+    }
+  },
+  "certificateAuthorities": {
+    "ca.insurance.healthcare.com": {
+      "url": "http://localhost:7120",
+      "caName": "insurance",
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/backend/app/organizations/fabric-ca/insurance/tls.cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "pharmacy-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Pharmacy"
+  },
+  "organizations": {
+    "Pharmacy": {
+      "mspid": "PharmacyMSP",
+      "certificateAuthorities": ["ca.pharmacy.healthcare.com"]
+    }
+  },
+  "certificateAuthorities": {
+    "ca.pharmacy.healthcare.com": {
+      "url": "http://localhost:7080",
+      "caName": "pharmacy",
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/backend/app/organizations/fabric-ca/pharmacy/tls.cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

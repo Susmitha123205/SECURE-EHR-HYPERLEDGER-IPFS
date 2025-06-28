@@ -1,0 +1,25 @@
+{
+  "name": "healthcare-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Patient"
+  },
+  "organizations": {
+    "Patient": {
+      "mspid": "PatientMSP",
+      "certificateAuthorities": ["ca.patient.healthcare.com"]
+    }
+  },
+  "certificateAuthorities": {
+    "ca.patient.healthcare.com": {
+      "url": "http://localhost:7060",
+      "caName": "patient",
+      "tlsCACerts": {
+        "path": "./organizations/fabric-ca/patient/tls.cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}
