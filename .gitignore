@@ -1,8 +1,19 @@
-/fablo-target
-/web
-/backend/config
-/backend/patient-wallet
-/backend/doctor-wallet
-/backend/pharmacy-wallet
-/backend/lab-record
-/backend/insurance-wallet
+# Dependency directories
+node_modules/
+fablo/node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Build & cache
+build/
+*.tar
+*.zip
+*.log
+*.deb
+.cache/
+*.pack
+
+# Sensitive files
+.env
+wallets-backup/
+fablo-target/
