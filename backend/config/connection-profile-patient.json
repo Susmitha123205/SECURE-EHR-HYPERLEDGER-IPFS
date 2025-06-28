@@ -1,0 +1,65 @@
+{
+  "name": "patient-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "PatientOrg",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300",
+          "eventHub": "300",
+          "eventReg": "300"
+        },
+        "orderer": "300"
+      }
+    }
+  },
+  "organizations": {
+    "PatientOrg": {
+      "mspid": "PatientMSP",
+      "peers": [
+        "peer0.patient.healthcare.com"
+      ],
+      "certificateAuthorities": [
+        "ca.patient.healthcare.com"
+      ]
+    }
+  },
+  "peers": {
+    "peer0.patient.healthcare.com": {
+      "url": "grpc://localhost:7061",
+      "eventUrl": "grpc://localhost:7063",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.patient.healthcare.com",
+        "grpc.keepalive_time_ms": 600000
+      },
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/fablo/fablo-target/fabric-config/crypto-config/peerOrganizations/patient.healthcare.com/peers/peer0.patient.healthcare.com/tls/ca.crt"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.patient.healthcare.com": {
+      "url": "http://localhost:7060",
+      "caName": "ca-patient",
+      "httpOptions": {
+        "verify": false
+      },
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/fablo/fablo-target/fabric-config/crypto-config/peerOrganizations/patient.healthcare.com/ca/ca.patient.healthcare.com-cert.pem"
+      }
+    }
+  },
+  "orderers": {
+    "orderer.healthcare.com": {
+      "url": "grpc://localhost:7030",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer.healthcare.com",
+        "grpc.keepalive_time_ms": 600000
+      },
+      "tlsCACerts": {
+        "path": "/home/sus/sus123/fablo/fablo-target/fabric-config/crypto-config/peerOrganizations/orderer.healthcare.com/peers/orderer0.group1.orderer.healthcare.com/tls/ca.crt"
+      }
+    }
+  }
+}
