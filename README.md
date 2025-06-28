@@ -233,6 +233,18 @@ build/
 .env
 wallets-backup/
 fablo-target/
+---
+
+## 🙋‍♀️ Project Contribution
+
+This project was developed as part of my **academic internship** at **NIT Warangal**, and was **individually designed and implemented** by *Boga Sushmita*.
+
+It integrates **Hyperledger Fabric**, **IPFS**, **MongoDB**, **Node.js**, and **React.js** into a complete decentralized EHR system. I handled the full development lifecycle including setup, coding, testing, and deployment.
+
+📧 [SushmitaBoga373@gmail.com](mailto:SushmitaBoga373@gmail.com)  
+🌐 [github.com/Susmitha123205](https://github.com/Susmitha123205)
+
+---
 
 
 
