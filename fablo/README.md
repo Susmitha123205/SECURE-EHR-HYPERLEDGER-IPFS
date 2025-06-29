@@ -118,20 +118,6 @@ This network setup is part of my **Secure EHR Blockchain Project**
 
 ````
 
----
-
-### ✅ Next Steps
-
-To upload this to your GitHub repo:
-
-```bash
-cd ~/sus123
-nano fablo/README.md     # (Paste this content and save)
-git add fablo/README.md
-git commit -m "Add final professional Fablo README"
-git push origin main
-````
-
 ## Kubernetes support
 
 TODO
