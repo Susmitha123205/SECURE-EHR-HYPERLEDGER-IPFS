@@ -108,8 +108,8 @@ fablo/
 This network setup is part of my **Secure EHR Blockchain Project**
 📍 **Internship at National Institute of Technology, Warangal**
 
-* 🧑‍💻 Built & configured by: **Boga Sushmita**
-* 📧 Email: [SushmitaBoga373@gmail.com](mailto:SushmitaBoga373@gmail.com)
+* 🧑‍💻 Built & configured by: **Boga Susmita**
+* 📧 Email: [susmitaboga373@gmail.com](mailto:susmitaboga373@gmail.com)
 * 🔗 GitHub: [github.com/Susmitha123205](https://github.com/Susmitha123205)
 
 ---
