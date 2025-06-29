@@ -1,0 +1,15 @@
+{
+  "name": "hospitalcc",
+  "version": "1.0.0",
+  "description": "Hospital Management Smart Contract",
+  "main": "index.js",
+  "scripts": {
+    "start": "fabric-chaincode-node start",
+    "build": "echo 'No build step required'"
+
+  },
+  "dependencies": {
+    "fabric-contract-api": "^2.4.0",
+    "fabric-shim": "^2.4.0"
+  }
+}

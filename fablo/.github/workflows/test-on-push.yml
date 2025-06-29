@@ -1,0 +1,246 @@
+name: Tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-main:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build Fablo
+        run: |
+          shellcheck --version && \
+          yamllint -v && \
+          npm install && \
+          npm run build && \
+          ./fablo-build.sh
+
+      - name: Test simple network
+        run: e2e-network/docker/test-01-simple.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-main
+          path: |
+            e2e-network/docker/test-01-simple.sh.logs/*
+            e2e-network/docker/test-01-simple.sh.tmpdir/fablo-target/**/*
+
+      - name: Test generators
+        run: |
+          npm run test:unit && \
+          npm run test:e2e && \
+          ./check-if-fablo-version-matches.sh
+
+      - name: Lint
+        run: npm run lint && ./lint.sh
+
+    
+  #  test-k8:
+  #    needs: test-main
+  #    runs-on: ubuntu-latest
+  #    timeout-minutes: 30
+  #    steps:
+  #
+  #      - name: Check out repository code
+  #        uses: actions/checkout@v2
+  #
+  #      - name: install k8, hlf plugin and helm
+  #        run: |
+  #          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-linux-amd64
+  #          chmod +x ./kind
+  #          sudo mv ./kind /usr/local/bin/kind
+  #          kind create cluster --wait 5m
+  #          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  #          chmod 700 get_helm.sh
+  #          ./get_helm.sh
+  #          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  #          chmod +x kubectl
+  #          sudo mv ./kubectl /usr/local/bin/kubectl
+  #          set -x; cd "$(mktemp -d)" &&
+  #          OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  #          ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  #          KREW="krew-${OS}_${ARCH}" &&
+  #          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  #          tar zxvf "${KREW}.tar.gz" &&
+  #          ./"${KREW}" install krew
+  #          export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+  #          kubectl krew install hlf
+  #
+  #          if [ -f "~/.bashrc" ]; then
+  #            echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+  #          fi
+  #
+  #          if [ -f "~/.zshrc" ]; then
+  #            echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
+  #          fi
+  #
+  #          helm repo add kfs "https://kfsoftware.github.io/hlf-helm-charts" --force-update
+  #          helm install hlf-operator --version=1.8.0 kfs/hlf-operator
+  #
+  #      - name: Build Fablo
+  #        run: |
+  #          shellcheck --version && \
+  #          yamllint -v && \
+  #          npm install && \
+  #          npm run build && \
+  #          ./fablo-build.sh
+  #
+  #      - name: fablo k8 tests
+  #        run: |
+  #          export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+  #          e2e-network/k8s/test-01-simple-k8s.sh
+
+  test-02-raft:
+    needs: test-main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build Fablo
+        run: |
+          shellcheck --version && \
+          yamllint -v && \
+          npm install && \
+          ./fablo-build.sh
+
+      - name: Test RAFT network
+        run: e2e-network/docker/test-02-raft-2orgs.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-02-raft
+          path: |
+            e2e-network/docker/test-02-raft.sh.logs/*
+            e2e-network/docker/test-02-raft.sh.tmpdir/fablo-target/**/*
+
+  test-03-private-data:
+    needs: test-main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build Fablo
+        run: |
+          shellcheck --version && \
+          yamllint -v && \
+          npm install && \
+          ./fablo-build.sh
+
+      - name: Test private data
+        run: e2e-network/docker/test-03-private-data.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-03-private-data
+          path: |
+            e2e-network/docker/test-03-private-data.sh.logs/*
+            e2e-network/docker/test-03-private-data.sh.tmpdir/fablo-target/**/*
+
+  test-04-snapshot:
+    needs: test-main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build Fablo
+        run: |
+          shellcheck --version && \
+          yamllint -v && \
+          npm install && \
+          ./fablo-build.sh
+
+      - name: Test snapshots
+        run: e2e-network/docker/test-04-snapshot.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-04-snapshot
+          path: |
+            e2e-network/docker/test-04-snapshot.sh.logs/*
+            e2e-network/docker/test-04-snapshot.sh.tmpdir/fablo-target/**/*
+  
+  test-05-v3:
+    needs: test-main
+    runs-on:  macos-15
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      
+      - name: Install Docker + Colima
+        run: |
+          brew update
+          brew install qemu colima  docker 
+          brew uninstall --ignore-dependencies lima
+          curl https://raw.githubusercontent.com/Homebrew/homebrew-core/45464b6c4788a80be3f131ab5e2a4468cdfa960c/Formula/l/lima.rb > lima.rb
+          brew install lima.rb
+          LIMACTL_PATH=$(brew --prefix)/bin/limactl
+          sudo curl -L -o $LIMACTL_PATH https://github.com/mikekazakov/lima-nohvf/raw/master/limactl
+          sudo chmod +x $LIMACTL_PATH
+          colima start --network-address --arch arm64 --vm-type=qemu
+          mkdir -p ~/.docker/cli-plugins
+          brew install docker-compose
+          ln -sfn $(brew --prefix)/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+
+      - name: Install dependencies
+        run: |
+          brew install shellcheck yamllint
+          npm install -g npm@latest
+          npm install
+
+  
+      - name: Build Fablo
+        run: |
+          shellcheck --version && \
+          yamllint -v && \
+          npm install && \
+          ./fablo-build.sh
+  
+      - name: Test version 3
+        run: e2e-network/docker/test-05-version3.sh
+  
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-05-version3
+          path: |
+            e2e-network/docker/test-05-version3-snapshot.sh.logs/*
+            e2e-network/docker/test-05-version3-snapshot.sh.tmpdir/fablo-target/**/*
+
+  test-05-v3-BFT:
+    needs: test-main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+  
+      - name: Build Fablo
+        run: |
+          shellcheck --version && \
+          yamllint -v && \
+          npm install && \
+          ./fablo-build.sh
+  
+      - name: Test version 3 with BFT
+        run: e2e-network/docker/test-05-version3-BFT.sh
+  
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-05-version3-BFT-snapshot
+          path: |
+            e2e-network/docker/test-05-version3-BFT-snapshot.sh.logs/*
+            e2e-network/docker/test-05-version3-BFT-snapshot.sh.tmpdir/fablo-target/**/*
+  
+  

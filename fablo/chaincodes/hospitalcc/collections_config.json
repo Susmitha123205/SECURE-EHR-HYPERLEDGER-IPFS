@@ -1,0 +1,34 @@
+[
+  {
+    "name": "patientPrivateCollection",
+    "policy": "OR('DoctorMSP.member', 'PatientMSP.member')",
+    "requiredPeerCount": 1,
+    "maxPeerCount": 5,
+    "blockToLive": 1000000,
+    "memberOnlyRead": true
+  },
+  {
+    "name": "labPrivateCollection",
+    "policy": "OR('DoctorMSP.member', 'LabMSP.member')",
+    "requiredPeerCount": 1,
+    "maxPeerCount": 5,
+    "blockToLive": 1000000,
+    "memberOnlyRead": true
+  },
+  {
+    "name": "pharmacyPrivateCollection",
+    "policy": "OR('DoctorMSP.member', 'PharmacyMSP.member')",
+    "requiredPeerCount": 1,
+    "maxPeerCount": 5,
+    "blockToLive": 1000000,
+    "memberOnlyRead": true
+  },
+  {
+    "name": "insurancePrivateCollection",
+    "policy": "OR('DoctorMSP.member', 'InsuranceMSP.member')",
+    "requiredPeerCount": 1,
+    "maxPeerCount": 5,
+    "blockToLive": 1000000,
+    "memberOnlyRead": true
+  }
+]
