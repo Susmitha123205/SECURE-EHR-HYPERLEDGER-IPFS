@@ -36,14 +36,16 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/healthcare'
 .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // ✅ Routes
+
+
 app.use("/api/auth", authRoutes);
-app.use("/api/patient", require("./routes/Patient/Patient"));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/doctor", doctorRoutes);
 app.use("/api/lab", labRoutes);
 app.use("/api/pharmacy", pharmacyRoutes);
 app.use("/api/insurance", insuranceRoutes);
-//app.use("/api/patient", patientRoutes);  // NOTE: already under /api/patient
+app.use("/api/patient", patientRoutes);  // NOTE: already under /api/patient
 app.use("/api/upload", require("./routes/upload"));
 
 // ✅ Root Route
@@ -56,7 +58,6 @@ const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {
   console.log(`🚀 Server started on port ${PORT}`);
 });
-
 
 
 
